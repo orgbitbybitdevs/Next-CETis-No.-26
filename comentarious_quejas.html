@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buzón de Quejas</title>
+    <style>
+        /* Estilos generales para centrar y dar forma a la app móvil simulada */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Contenedor principal que simula la pantalla de un teléfono */
+        .pantalla-contenedor {
+            width: 100%;
+            max-width: 412px; /* Ancho estándar de un smartphone */
+            height: 90vh;
+            background-color: #ffffff;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Encabezado */
+        .header {
+            background-color: #008080; /* Teal */
+            color: white;
+            padding: 16px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Formulario con Flexbox interno para empujar el botón abajo */
+        .formulario-queja {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto; /* Permite scroll si el contenido crece */
+        }
+
+        /* Contenido de arriba (Caja de texto + Sugerencia) */
+        .contenido-superior {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* 1. Caja de texto para la queja */
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            resize: none; /* Evita que el usuario deforme la caja */
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #008080;
+            box-shadow: 0 0 0 2px rgba(0, 128, 128, 0.2);
+        }
+
+        /* 2. Sección de sugerencia para imágenes */
+        .sugerencia-imagenes {
+            background-color: rgba(0, 128, 128, 0.05);
+            border: 1px dashed rgba(0, 128, 128, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icono-imagen {
+            font-size: 2rem;
+            color: #008080;
+        }
+
+        .texto-sugerencia h4 {
+            margin: 0 0 4px 0;
+            font-size: 0.95rem;
+            color: #222;
+        }
+
+        .texto-sugerencia p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.3;
+        }
+
+        /* 3. Botón de enviar (Abajo del todo) */
+        .btn-enviar {
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-enviar:hover {
+            background-color: #006666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pantalla-contenedor">
+        <div class="header">Buzón de Quejas</div>
+
+        <form class="formulario-queja" onsubmit="enviarFormulario(event)">
+            
+            <div class="contenido-superior">
+                <label for="quejaInput">Escribe tu queja o sugerencia:</label>
+                <textarea id="quejaInput" placeholder="Detalla lo sucedido aquí..." required></textarea>
+
+                <div class="sugerencia-imagenes">
+                    <span class="icono-imagen">🖼️</span>
+                    <div class="texto-sugerencia">
+                        <h4>¿Tienes evidencias?</h4>
+                        <p>Te sugerimos adjuntar fotos o capturas de pantalla más adelante para procesar tu reporte más rápido.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-enviar">Enviar Queja</button>
+            
+        </form>
+    </div>
+
+    <script>
+        // Función simple para manejar el clic del botón
+        function enviarFormulario(event) {
+            event.preventDefault(); // Evita que la página se recargue
+            const texto = document.getElementById('quejaInput').value;
+            
+            alert('¡Queja recibida con éxito!\n\nTexto enviado: "' + texto + '"');
+            document.getElementById('quejaInput').value = ''; // Limpia la caja
+        }
+    </script>
+
+</body>
+</html>
