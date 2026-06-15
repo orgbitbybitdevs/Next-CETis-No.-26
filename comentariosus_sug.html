@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buzón de Sugerencias</title>
+    <style>
+        /* Estilos generales para centrar y dar forma a la interfaz */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Contenedor principal que simula la pantalla de la app */
+        .pantalla-contenedor {
+            width: 100%;
+            max-width: 412px;
+            height: 90vh;
+            background-color: #ffffff;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Encabezado */
+        .header {
+            background-color: #008080; /* Color Teal */
+            color: white;
+            padding: 16px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Formulario con Flexbox para empujar el botón al fondo */
+        .formulario-sugerencia {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        /* Contenido superior que ocupa el espacio disponible */
+        .contenido-superior {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.05rem;
+        }
+
+        /* Caja de texto para la sugerencia */
+        textarea {
+            width: 100%;
+            height: 200px; /* Un poco más alta ya que no hay sección de imagen */
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            resize: none;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #008080;
+            box-shadow: 0 0 0 2px rgba(0, 128, 128, 0.2);
+        }
+
+        /* Botón de enviar abajo */
+        .btn-enviar {
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-enviar:hover {
+            background-color: #006666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pantalla-contenedor">
+        <div class="header">Buzón de Sugerencias</div>
+
+        <form class="formulario-sugerencia" onsubmit="enviarSugerencia(event)">
+            
+            <div class="contenido-superior">
+                <label for="sugerenciaInput">¿Cómo podemos mejorar?</label>
+                <textarea id="sugerenciaInput" placeholder="Escribe tu idea o sugerencia aquí..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-enviar">Enviar Sugerencia</button>
+            
+        </form>
+    </div>
+
+    <script>
+        // Función para procesar el envío
+        function enviarSugerencia(event) {
+            event.preventDefault(); 
+            const texto = document.getElementById('sugerenciaInput').value;
+            
+            alert('¡Gracias por tu propuesta!\n\nS
