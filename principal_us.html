@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usuario</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.contenedor{
+    width:380px;
+    background:#fff;
+    border:2px solid #000;
+    border-radius:10px;
+    padding:20px;
+}
+
+.encabezado{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.encabezado h2{
+    font-size:28px;
+}
+
+.btn-cerrar{
+    background:#d9534f;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.btn-cerrar:hover{
+    background:#c9302c;
+}
+
+.tarjeta{
+    border:2px solid #000;
+    border-radius:10px;
+    height:140px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:28px;
+    margin-bottom:25px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.tarjeta:hover{
+    background:#f0f0f0;
+}
+</style>
+
+</head>
+<body>
+
+<div class="contenedor">
+
+    <div class="encabezado">
+        <h2>Usuario</h2>
+        <button class="btn-cerrar">Cerrar sesión</button>
+    </div>
+
+    <div class="tarjeta">
+        Quejas
+    </div>
+
+    <div class="tarjeta">
+        Sugerencias
+    </div>
+
+</div>
+
+</body>
+</html>
