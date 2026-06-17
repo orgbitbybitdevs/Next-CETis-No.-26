@@ -1,0 +1,54 @@
+---
+import { Bot, Save } from '@lucide/astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import DashboardShell from '@/components/DashboardShell.astro';
+---
+
+<BaseLayout title="Detalle de reporte | Buzón CETis No. 26" shell="app">
+  <DashboardShell>
+    <div id="report-detail" data-report-id={Astro.params.id}>
+      <div id="report-content" class="mb-6"></div>
+      <form id="review-form" class="apple-panel grid gap-5 p-6 sm:p-8">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="grid gap-2">
+            <label class="field-label" for="status">Estado</label>
+            <select id="status" name="status" class="input">
+              <option value="new">Nuevo</option>
+              <option value="in_review">En revisión</option>
+              <option value="resolved">Resuelto</option>
+              <option value="rejected">Rechazado</option>
+            </select>
+          </div>
+          <div class="grid gap-2">
+            <label class="field-label" for="imageReviewStatus">Visibilidad de imagen</label>
+            <select id="imageReviewStatus" name="imageReviewStatus" class="input">
+              <option value="none">Sin imagen</option>
+              <option value="hidden_until_review">Oculta hasta revisión</option>
+              <option value="approved">Aprobada</option>
+              <option value="rejected">Rechazada</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid gap-2">
+          <label class="field-label" for="moderatorNotes">Notas internas</label>
+          <textarea id="moderatorNotes" name="moderatorNotes" class="input min-h-32" maxlength="2500"></textarea>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button class="btn-primary" type="submit">
+            <Save class="h-4 w-4" />
+            Guardar revisión
+          </button>
+          <button id="gemini-button" class="btn-secondary" type="button">
+            <Bot class="h-4 w-4" />
+            Resumen seguro
+          </button>
+          <button id="gemini-local-button" class="btn-secondary" type="button">Resumen con mi key local</button>
+        </div>
+        <pre id="gemini-output" class="hidden overflow-auto rounded-md bg-ink p-4 text-xs text-zinc-50"></pre>
+      </form>
+    </div>
+  </DashboardShell>
+  <script>
+    import '@/scripts/reportDetail';
+  </script>
+</BaseLayout>

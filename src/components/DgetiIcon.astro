@@ -1,0 +1,12 @@
+---
+import dgetiIcon from '../public/dgeti.png';
+
+interface Props {
+  class?: string;
+  alt?: string;
+}
+
+const { class: className = 'h-4 w-4', alt = '' } = Astro.props;
+---
+
+<img src={dgetiIcon.src} alt={alt} class:list={['inline-block shrink-0 object-contain', className]} decoding="async" />

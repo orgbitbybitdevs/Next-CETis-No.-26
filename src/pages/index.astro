@@ -1,0 +1,162 @@
+---
+import { ArrowRight, BadgeCheck, ClipboardList, FileCheck, LockKeyhole, ShieldCheck, UserCheck } from '@lucide/astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import DgetiIcon from '@/components/DgetiIcon.astro';
+import bitbybitLogo from '../public/bitbybit.png';
+import dgetiWatermark from '../public/dgeti.png';
+import nextCubeLogo from '../public/next_cube.png';
+import nextLettersLogo from '../public/next_letters.png';
+---
+
+<BaseLayout title="Buzón de Quejas y Sugerencias | CETis No. 26">
+  <section class="relative overflow-hidden">
+    <img
+      src={dgetiWatermark.src}
+      alt=""
+      class="pointer-events-none absolute -right-24 top-14 hidden w-[34rem] max-w-none opacity-[0.035] grayscale lg:block"
+      aria-hidden="true"
+    />
+    <div class="mx-auto grid max-w-6xl gap-8 px-4 pb-8 pt-8 sm:gap-10 sm:px-6 sm:pb-12 sm:pt-14 lg:min-h-[calc(100vh-152px)] lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+      <div>
+        <div class="mb-6 inline-flex max-w-full items-center gap-3 rounded-2xl border border-zinc-200/80 bg-white/90 px-4 py-3 shadow-sm">
+          <span class="grid h-14 w-14 place-items-center overflow-hidden rounded-xl bg-white ring-1 ring-zinc-950/10">
+            <DgetiIcon alt="DGETI" class="h-12 w-12" />
+          </span>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.16em] text-rosewood">CETis No. 26</p>
+            <p class="text-sm font-semibold text-ink">Sistema Institucional de Atención</p>
+          </div>
+        </div>
+        <p class="mb-4 text-sm font-semibold text-rosewood">Sistema Institucional de Atención</p>
+        <h1 class="max-w-3xl text-4xl font-semibold leading-[1.05] tracking-normal text-ink sm:text-6xl">
+          Buzón de Quejas y Sugerencias
+        </h1>
+        <p class="mt-5 max-w-2xl text-base leading-7 text-zinc-600 sm:mt-6 sm:text-xl sm:leading-8">
+          Canal digital del CETis No. 26 para reportar situaciones, compartir sugerencias y dar seguimiento mediante revisión responsable del personal autorizado.
+        </p>
+        <div class="mt-7 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap">
+          <a class="btn-primary btn-hero w-full sm:w-auto" href="/submit/queja">
+            Presentar queja
+            <ArrowRight class="h-4 w-4" />
+          </a>
+          <a class="btn-secondary btn-hero w-full sm:w-auto" href="/submit/sugerencia">
+            Enviar sugerencia
+            <ArrowRight class="h-4 w-4" />
+          </a>
+        </div>
+        <div class="mt-8 grid gap-3 text-sm text-zinc-600 sm:grid-cols-3">
+          <div class="flex items-center gap-2">
+            <BadgeCheck class="h-4 w-4 text-rosewood" />
+            Registro formal
+          </div>
+          <div class="flex items-center gap-2">
+            <LockKeyhole class="h-4 w-4 text-rosewood" />
+            Canal privado
+          </div>
+          <div class="flex items-center gap-2">
+            <UserCheck class="h-4 w-4 text-rosewood" />
+            Revisión autorizada
+          </div>
+        </div>
+      </div>
+
+      <aside class="apple-surface relative overflow-hidden p-4 sm:p-7">
+        <div class="absolute inset-x-0 top-0 h-1 bg-rosewood"></div>
+        <div class="mb-6 flex items-start justify-between gap-4 sm:mb-7">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.16em] text-rosewood">Proceso institucional</p>
+            <h2 class="mt-2 text-xl font-semibold text-ink sm:text-2xl">Atención con seguimiento</h2>
+          </div>
+          <ShieldCheck class="h-7 w-7 text-rosewood" />
+        </div>
+        <div class="grid gap-4">
+          <div class="rounded-xl border border-zinc-200/80 bg-white p-4 sm:p-5">
+            <div class="flex gap-4">
+              <span class="font-mono text-sm font-semibold text-rosewood">01</span>
+              <div>
+                <h3 class="font-semibold text-ink">Registro del caso</h3>
+                <p class="mt-2 text-sm leading-6 text-zinc-600">Se captura la información necesaria para identificar la situación y generar contexto de atención.</p>
+              </div>
+              <ClipboardList class="ml-auto h-5 w-5 shrink-0 text-zinc-400" />
+            </div>
+          </div>
+          <div class="rounded-xl border border-zinc-200/80 bg-white p-4 sm:p-5">
+            <div class="flex gap-4">
+              <span class="font-mono text-sm font-semibold text-rosewood">02</span>
+              <div>
+                <h3 class="font-semibold text-ink">Revisión responsable</h3>
+                <p class="mt-2 text-sm leading-6 text-zinc-600">El personal autorizado revisa el reporte bajo criterios de confidencialidad y pertinencia.</p>
+              </div>
+              <ShieldCheck class="ml-auto h-5 w-5 shrink-0 text-zinc-400" />
+            </div>
+          </div>
+          <div class="rounded-xl border border-zinc-200/80 bg-white p-4 sm:p-5">
+            <div class="flex gap-4">
+              <span class="font-mono text-sm font-semibold text-rosewood">03</span>
+              <div>
+                <h3 class="font-semibold text-ink">Seguimiento institucional</h3>
+                <p class="mt-2 text-sm leading-6 text-zinc-600">Cada caso puede avanzar por estado para facilitar una respuesta ordenada y documentada.</p>
+              </div>
+              <FileCheck class="ml-auto h-5 w-5 shrink-0 text-zinc-400" />
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-4 pb-10 sm:px-6">
+      <div class="grid overflow-hidden rounded-2xl border border-zinc-200/80 bg-white/85 shadow-sm sm:grid-cols-3">
+        <div class="border-b border-zinc-200/80 px-5 py-4 sm:border-b-0 sm:border-r">
+          <p class="text-sm font-semibold text-ink">Confidencialidad</p>
+          <p class="mt-1 text-sm text-zinc-500">Protección de datos del reporte.</p>
+        </div>
+        <div class="border-b border-zinc-200/80 px-5 py-4 sm:border-b-0 sm:border-r">
+          <p class="text-sm font-semibold text-ink">Folio de seguimiento</p>
+          <p class="mt-1 text-sm text-zinc-500">Control ordenado de cada caso.</p>
+        </div>
+        <div class="px-5 py-4">
+          <p class="text-sm font-semibold text-ink">Personal autorizado</p>
+          <p class="mt-1 text-sm text-zinc-500">Acceso reservado para revisión.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="mx-auto max-w-6xl px-4 pb-12 sm:px-6 sm:pb-16" aria-labelledby="about-project-title">
+      <div class="overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/90 shadow-soft">
+        <div class="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
+          <div class="border-b border-zinc-200/80 p-6 sm:p-8 lg:border-b-0 lg:border-r">
+            <p class="text-xs font-semibold uppercase tracking-[0.16em] text-rosewood">Acerca del proyecto</p>
+            <h2 id="about-project-title" class="mt-3 text-2xl font-semibold tracking-normal text-ink sm:text-3xl">
+              Desarrollado en NEXT: Talent Lab
+            </h2>
+            <p class="mt-4 max-w-2xl text-sm leading-7 text-zinc-600 sm:text-base">
+              Este buzón digital fue trabajado como parte de un laboratorio de formación tecnológica, integrando diseño de interfaz, desarrollo web y una experiencia de atención institucional para el CETis No. 26.
+            </p>
+          </div>
+
+          <div class="grid gap-4 p-6 sm:p-8">
+            <div class="grid grid-cols-[4.25rem_1fr] items-center gap-4 rounded-2xl border border-zinc-200/80 bg-zinc-50/80 p-4">
+              <div class="grid h-16 w-16 place-items-center overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-zinc-950/10">
+                <img src={nextCubeLogo.src} alt="NEXT:" class="h-12 w-12 object-contain" loading="lazy" />
+              </div>
+              <div class="min-w-0">
+                <img src={nextLettersLogo.src} alt="NEXT:" class="h-10 max-w-full object-contain object-left" loading="lazy" />
+                <p class="mt-2 text-sm font-semibold text-zinc-600">Talent Lab</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[4.25rem_1fr] items-center gap-4 rounded-2xl border border-zinc-200/80 bg-zinc-50/80 p-4">
+              <div class="grid h-16 w-16 place-items-center overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-zinc-950/10">
+                <img src={bitbybitLogo.src} alt="BitByBit Academy" class="h-14 w-14 object-contain" loading="lazy" />
+              </div>
+              <div>
+                <p class="text-base font-semibold text-ink">BitByBit Academy</p>
+                <p class="mt-1 text-sm leading-6 text-zinc-600">Acompañamiento y formación técnica para el desarrollo del proyecto.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+</BaseLayout>

@@ -1,0 +1,165 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isModerator() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/roles/$(request.auth.uid))
+        && get(/databases/$(database)/documents/roles/$(request.auth.uid)).data.active == true
+        && get(/databases/$(database)/documents/roles/$(request.auth.uid)).data.role in ['moderator', 'superuser'];
+    }
+
+    function isSuperuser() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/roles/$(request.auth.uid))
+        && get(/databases/$(database)/documents/roles/$(request.auth.uid)).data.active == true
+        && get(/databases/$(database)/documents/roles/$(request.auth.uid)).data.role == 'superuser';
+    }
+
+    function hasOnly(keys) {
+      return request.resource.data.keys().hasOnly(keys);
+    }
+
+    function validCategory() {
+      return request.resource.data.category in [
+        'academico',
+        'infraestructura',
+        'seguridad',
+        'convivencia',
+        'servicios',
+        'otro'
+      ];
+    }
+
+    function validReportCreate() {
+      return signedIn()
+        && hasOnly([
+          'type',
+          'title',
+          'description',
+          'category',
+          'group',
+          'isAnonymous',
+          'contactName',
+          'contactEmail',
+          'submitterUid',
+          'image',
+          'imageReviewStatus',
+          'status',
+          'moderatorNotes',
+          'createdAt',
+          'updatedAt'
+        ])
+        && request.resource.data.type in ['complaint', 'suggestion']
+        && request.resource.data.title is string
+        && request.resource.data.title.size() >= 8
+        && request.resource.data.title.size() <= 120
+        && request.resource.data.description is string
+        && request.resource.data.description.size() >= 30
+        && request.resource.data.description.size() <= 2500
+        && validCategory()
+        && request.resource.data.group is string
+        && request.resource.data.group.size() <= 40
+        && request.resource.data.contactName is string
+        && request.resource.data.contactName.size() <= 80
+        && request.resource.data.contactEmail is string
+        && request.resource.data.contactEmail.size() <= 120
+        && request.resource.data.status == 'new'
+        && request.resource.data.moderatorNotes == ''
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && (
+          request.resource.data.isAnonymous == true
+            ? request.resource.data.submitterUid == null
+              && request.resource.data.contactName == ''
+              && request.resource.data.contactEmail.size() <= 120
+            : request.resource.data.submitterUid == request.auth.uid
+              && request.resource.data.contactEmail.size() > 0
+        )
+        && (
+          request.resource.data.type == 'suggestion'
+            ? request.resource.data.image == null
+              && request.resource.data.imageReviewStatus == 'none'
+            : (
+                request.resource.data.image == null
+                  && request.resource.data.imageReviewStatus == 'none'
+              ) || (
+                request.resource.data.image is map
+                  && request.resource.data.imageReviewStatus == 'hidden_until_review'
+                  && request.resource.data.image.keys().hasOnly([
+                    'publicId',
+                    'secureUrl',
+                    'width',
+                    'height',
+                    'bytes',
+                    'format'
+                  ])
+                  && request.resource.data.image.width <= 1600
+                  && request.resource.data.image.bytes <= 2000000
+                  && request.resource.data.image.format in ['jpg', 'jpeg', 'png', 'webp']
+              )
+        );
+    }
+
+    match /reports/{reportId} {
+      allow create: if validReportCreate();
+      allow read: if isModerator();
+      allow update: if isModerator()
+        && request.resource.data.diff(resource.data).changedKeys().hasOnly([
+          'status',
+          'moderatorNotes',
+          'imageReviewStatus',
+          'updatedAt'
+        ])
+        && request.resource.data.status in ['new', 'in_review', 'resolved', 'rejected']
+        && request.resource.data.moderatorNotes is string
+        && request.resource.data.moderatorNotes.size() <= 2500
+        && request.resource.data.imageReviewStatus in ['none', 'hidden_until_review', 'approved', 'rejected']
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if false;
+    }
+
+    match /roles/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || isSuperuser());
+      allow list: if isSuperuser();
+      allow create, update: if isSuperuser()
+        && request.resource.data.keys().hasOnly(['role', 'displayName', 'email', 'active', 'updatedAt'])
+        && request.resource.data.role in ['moderator', 'superuser']
+        && request.resource.data.active is bool
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() <= 100
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 160
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if false;
+    }
+
+    match /rateLimits/{rateLimitId} {
+      allow get: if signedIn() && resource.data.uid == request.auth.uid;
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid', 'scope', 'day', 'count', 'updatedAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.scope in ['reportSubmit', 'cloudinaryUpload']
+        && request.resource.data.day is string
+        && request.resource.data.count == 1
+        && request.resource.data.updatedAt is timestamp;
+      allow update: if signedIn()
+        && resource.data.uid == request.auth.uid
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.scope == resource.data.scope
+        && request.resource.data.day == resource.data.day
+        && request.resource.data.count == resource.data.count + 1
+        && (
+          request.resource.data.scope == 'reportSubmit'
+            ? request.resource.data.count <= 5
+            : request.resource.data.count <= 3
+        )
+        && request.resource.data.updatedAt is timestamp;
+      allow list, delete: if false;
+    }
+  }
+}

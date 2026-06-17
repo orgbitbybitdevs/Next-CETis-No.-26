@@ -1,0 +1,28 @@
+{
+  "name": "buzon-cetis-no-26",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "NODE_OPTIONS=--disable-warning=DEP0040 astro dev",
+    "build": "NODE_OPTIONS=--disable-warning=DEP0040 astro check && NODE_OPTIONS=--disable-warning=DEP0040 astro build",
+    "preview": "NODE_OPTIONS=--disable-warning=DEP0040 astro preview",
+    "astro": "NODE_OPTIONS=--disable-warning=DEP0040 astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.2",
+    "@astrojs/cloudflare": "^13.7.0",
+    "@lucide/astro": "^1.20.0",
+    "@tailwindcss/forms": "^0.5.10",
+    "astro": "^6.4.7",
+    "firebase": "^11.9.1",
+    "jose": "^6.0.11",
+    "typescript": "^5.8.3",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
+  }
+}

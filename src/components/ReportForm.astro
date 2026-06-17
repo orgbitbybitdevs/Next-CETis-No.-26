@@ -1,0 +1,180 @@
+---
+import { AtSign, EyeOff, FileImage, FileText, LockKeyhole, Send, UserRound } from '@lucide/astro';
+
+interface Props {
+  type: 'complaint' | 'suggestion';
+}
+
+const { type } = Astro.props;
+const isComplaint = type === 'complaint';
+const sectionThreeTitle = isComplaint ? 'Evidencia opcional' : 'Contexto opcional';
+const submitLabel = isComplaint ? 'Presentar queja' : 'Enviar sugerencia';
+---
+
+<form id="report-form" data-report-type={type} class="apple-surface grid gap-5 p-4 sm:gap-6 sm:p-6 lg:p-7" novalidate>
+  <input id="contactEmail" name="contactEmail" type="hidden" />
+
+  <section class="rounded-2xl border border-zinc-200/80 bg-white p-4 sm:p-5">
+    <div class="mb-5 flex items-start gap-3">
+      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-rosewood/10 text-sm font-semibold text-rosewood">01</span>
+      <div>
+        <h2 class="font-semibold text-ink">{isComplaint ? 'Información del reporte' : 'Propuesta'}</h2>
+        <p class="mt-1 text-sm leading-6 text-zinc-500">Describe el caso con claridad para facilitar la revisión institucional.</p>
+      </div>
+      <FileText class="ml-auto hidden h-5 w-5 text-zinc-400 sm:block" />
+    </div>
+
+    <div class="grid gap-5">
+      <div class="grid gap-2">
+        <label class="field-label" for="title">Título</label>
+        <input id="title" name="title" class="input" maxlength="120" required placeholder={isComplaint ? 'Resume la situación' : 'Resume la propuesta'} />
+        <p class="field-error hidden" data-field-error="title"></p>
+      </div>
+
+      <div class="grid gap-2 sm:grid-cols-[0.9fr_1.1fr] sm:gap-4">
+        <div class="grid gap-2">
+          <label class="field-label" for="category">Categoría</label>
+          <select id="category" name="category" class="input" required>
+            <option value="academico">Académico</option>
+            <option value="infraestructura">Infraestructura</option>
+            <option value="seguridad">Seguridad</option>
+            <option value="convivencia">Convivencia</option>
+            <option value="servicios">Servicios</option>
+            <option value="otro">Otro</option>
+          </select>
+          <p class="field-error hidden" data-field-error="category"></p>
+        </div>
+
+        <div class="grid gap-2">
+          <label class="field-label" for="group">Grupo o área</label>
+          <input id="group" name="group" class="input" maxlength="40" placeholder="Opcional" />
+        </div>
+      </div>
+
+      <div class="grid gap-2">
+        <label class="field-label" for="description">Descripción</label>
+        <textarea
+          id="description"
+          name="description"
+          class="input min-h-40 resize-y"
+          maxlength="2500"
+          required
+          placeholder={isComplaint ? 'Indica qué ocurrió, dónde y cuándo.' : 'Describe qué cambio propones y cómo ayudaría.'}
+        ></textarea>
+        <p class="field-help">Mínimo 30 caracteres. Evita incluir datos personales de terceros si no son necesarios.</p>
+        <p class="field-error hidden" data-field-error="description"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-zinc-200/80 bg-white p-4 sm:p-5">
+    <div class="mb-5 flex items-start gap-3">
+      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-rosewood/10 text-sm font-semibold text-rosewood">02</span>
+      <div>
+        <h2 class="font-semibold text-ink">Privacidad</h2>
+        <p class="mt-1 text-sm leading-6 text-zinc-500">Tu identidad no será visible para el personal moderador cuando el reporte sea anónimo.</p>
+      </div>
+      <LockKeyhole class="ml-auto hidden h-5 w-5 text-zinc-400 sm:block" />
+    </div>
+
+    <div class="grid gap-4">
+      <label class="flex items-start gap-3 rounded-2xl border border-zinc-200/80 bg-zinc-50/80 p-4">
+        <input id="anonymous" name="isAnonymous" type="checkbox" class="mt-1 rounded border-zinc-300 text-rosewood focus:ring-rosewood" checked />
+        <span>
+          <span class="block text-sm font-semibold text-ink">Enviar de forma anónima</span>
+          <span class="field-help">No se guardará tu UID ni tu nombre cuando esta opción esté activa.</span>
+        </span>
+      </label>
+
+      <div id="anonymous-contact" class="grid gap-3">
+        <label class="flex items-start gap-3 rounded-2xl border border-zinc-200/80 bg-white p-4">
+          <input id="wants-contact-email" type="checkbox" class="mt-1 rounded border-zinc-300 text-rosewood focus:ring-rosewood" />
+          <span>
+            <span class="block text-sm font-semibold text-ink">Deseo dejar un correo de contacto</span>
+            <span class="field-help">Opcional. Se usará solo para dar seguimiento si el personal autorizado lo requiere.</span>
+          </span>
+        </label>
+        <div id="anonymous-contact-email-wrap" class="grid gap-2" hidden>
+          <label class="field-label flex items-center gap-2" for="anonymousContactEmail">
+            <AtSign class="h-4 w-4 text-rosewood" />
+            Correo de contacto
+          </label>
+          <input id="anonymousContactEmail" class="input" type="email" maxlength="120" placeholder="correo@ejemplo.com" />
+          <p class="field-error hidden" data-field-error="contactEmail"></p>
+        </div>
+      </div>
+
+      <div id="contact-fields" class="grid gap-4 sm:grid-cols-2" hidden>
+        <div class="grid gap-2">
+          <label class="field-label flex items-center gap-2" for="contactName">
+            <UserRound class="h-4 w-4 text-rosewood" />
+            Nombre
+          </label>
+          <input id="contactName" name="contactName" class="input" maxlength="80" placeholder="Nombre completo" />
+        </div>
+        <div class="grid gap-2">
+          <label class="field-label flex items-center gap-2" for="identityContactEmail">
+            <AtSign class="h-4 w-4 text-rosewood" />
+            Correo
+          </label>
+          <input id="identityContactEmail" class="input" type="email" maxlength="120" placeholder="correo@ejemplo.com" />
+          <p class="field-error hidden" data-field-error="identityContactEmail"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    isComplaint && (
+      <section class="rounded-2xl border border-zinc-200/80 bg-white p-4 sm:p-5">
+        <div class="mb-5 flex items-start gap-3">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-rosewood/10 text-sm font-semibold text-rosewood">03</span>
+          <div>
+            <h2 class="font-semibold text-ink">{sectionThreeTitle}</h2>
+            <p class="mt-1 text-sm leading-6 text-zinc-500">La imagen permanecerá oculta hasta revisión.</p>
+          </div>
+          <FileImage class="ml-auto hidden h-5 w-5 text-zinc-400 sm:block" />
+        </div>
+        <label
+          id="image-dropzone"
+          class="grid cursor-pointer place-items-center rounded-2xl border border-dashed border-zinc-300 bg-zinc-50/80 px-4 py-8 text-center transition hover:border-rosewood/50 hover:bg-rosewood/5"
+          for="image"
+        >
+          <input id="image" name="image" class="sr-only" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
+          <FileImage class="mb-3 h-8 w-8 text-rosewood" />
+          <span class="text-sm font-semibold text-ink">Arrastra una imagen aquí o selecciona un archivo</span>
+          <span class="mt-1 text-xs leading-5 text-zinc-500">JPG, PNG o WebP · máximo 2 MB</span>
+        </label>
+        <div id="image-preview" class="mt-4 hidden overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-50 p-3">
+          <img id="image-preview-img" alt="Vista previa de evidencia" class="max-h-56 w-full rounded-xl object-contain" />
+          <p id="image-preview-name" class="mt-2 truncate text-sm font-semibold text-zinc-700"></p>
+        </div>
+        <p class="mt-3 text-sm leading-6 text-zinc-500">La imagen permanecerá oculta hasta revisión.</p>
+        <p class="field-error hidden" data-field-error="image"></p>
+      </section>
+    )
+  }
+
+  {
+    !isComplaint && (
+      <section class="rounded-2xl border border-zinc-200/80 bg-white p-4 sm:p-5">
+        <div class="flex items-start gap-3">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-rosewood/10 text-sm font-semibold text-rosewood">03</span>
+          <div>
+            <h2 class="font-semibold text-ink">{sectionThreeTitle}</h2>
+            <p class="mt-1 text-sm leading-6 text-zinc-500">Puedes agregar grupo o área en la sección principal si ayuda a ubicar mejor la propuesta.</p>
+          </div>
+          <EyeOff class="ml-auto hidden h-5 w-5 text-zinc-400 sm:block" />
+        </div>
+      </section>
+    )
+  }
+
+  <div id="form-error" class="hidden rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700"></div>
+  <div id="form-success" class="hidden rounded-md border border-green-200 bg-green-50 p-3 text-sm text-green-700"></div>
+
+  <button class="btn-primary w-full sm:w-auto sm:justify-self-start" type="submit" data-submit-label={submitLabel} data-loading-label="Enviando...">
+    <Send class="h-4 w-4" />
+    <span>{submitLabel}</span>
+  </button>
+</form>

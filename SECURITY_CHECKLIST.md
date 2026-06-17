@@ -1,0 +1,27 @@
+# Security Checklist
+
+- [ ] Firebase project remains on Spark plan.
+- [ ] No Firebase Cloud Functions are deployed.
+- [ ] No Firebase Admin SDK credentials exist in this repo.
+- [ ] Cloudinary API Secret is stored only in Cloudflare environment variables.
+- [ ] Gemini API key is stored only in Cloudflare environment variables, or moderators paste their own key into localStorage.
+- [ ] `.env` and `.env.local` are not committed.
+- [ ] Firestore rules from `firestore.rules` are deployed.
+- [ ] Firestore indexes from `firestore.indexes.json` are deployed.
+- [ ] Anonymous Auth is enabled for public submissions.
+- [ ] Email/Password Auth is enabled only for staff moderation accounts.
+- [ ] First superuser is manually bootstrapped in `roles/{uid}`.
+- [ ] No superuser UID is hardcoded in source.
+- [ ] Public reads of `reports` are denied.
+- [ ] Suggestions cannot upload images.
+- [ ] Complaints can upload at most one optional image.
+- [ ] Client file validation enforces jpg/jpeg/png/webp, max 2 MB, max 1600px width, and compression before upload.
+- [ ] Cloudinary preset is restricted to images and the intended formats.
+- [ ] Cloudinary images are treated as `hidden_until_review` until moderator approval.
+- [ ] Firebase App Check enforcement is enabled for Firestore after testing.
+- [ ] Cloudflare routes verify Firebase ID tokens before privileged actions.
+- [ ] Gemini and moderation routes require moderator or superuser role.
+- [ ] Upload parameter route requires authenticated Firebase user and complaint type.
+- [ ] Upload parameter route rate-limits by Firebase UID/day.
+- [ ] Dashboard queries remain paginated with `limit(20)`.
+- [ ] No broad realtime listeners are introduced for report collections.

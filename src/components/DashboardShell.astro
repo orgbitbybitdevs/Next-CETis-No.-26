@@ -1,0 +1,24 @@
+---
+import { LogOut, Shield, UserCog } from '@lucide/astro';
+---
+
+<div class="mb-7 flex flex-wrap items-center justify-between gap-3">
+  <div class="flex items-center gap-2 text-sm font-semibold">
+    <a class="nav-link" href="/dashboard">Reportes</a>
+    <a id="roles-link" class="nav-link hidden" href="/admin/roles">
+      <UserCog class="inline h-4 w-4" />
+      Roles
+    </a>
+  </div>
+  <div class="flex items-center gap-2">
+    <span id="role-badge" class="status-pill bg-white/80 text-zinc-700 shadow-sm">
+      <Shield class="mr-1 h-3.5 w-3.5" />
+      Verificando
+    </span>
+    <button id="logout-button" class="btn-secondary" type="button">
+      <LogOut class="h-4 w-4" />
+      Salir
+    </button>
+  </div>
+</div>
+<slot />

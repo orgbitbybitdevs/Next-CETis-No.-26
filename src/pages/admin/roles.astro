@@ -1,0 +1,55 @@
+---
+import { Save } from '@lucide/astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import DashboardShell from '@/components/DashboardShell.astro';
+import PageHeader from '@/components/PageHeader.astro';
+---
+
+<BaseLayout title="Roles | Buzón CETis No. 26" shell="app">
+  <DashboardShell>
+    <PageHeader
+      eyebrow="Superusuarios"
+      title="Gestion de roles"
+      description="Asigna moderadores y superusuarios con documentos roles/{uid}. El primer superusuario se crea manualmente en Firebase Console."
+    />
+    <form id="role-form" class="apple-surface mb-6 grid gap-4 p-6 sm:p-8">
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="grid gap-2">
+          <label class="field-label" for="uid">UID</label>
+          <input id="uid" name="uid" class="input font-mono" required />
+        </div>
+        <div class="grid gap-2">
+          <label class="field-label" for="role">Rol</label>
+          <select id="role" name="role" class="input">
+            <option value="moderator">Moderador</option>
+            <option value="superuser">Superusuario</option>
+          </select>
+        </div>
+        <div class="grid gap-2">
+          <label class="field-label" for="displayName">Nombre visible</label>
+          <input id="displayName" name="displayName" class="input" />
+        </div>
+        <div class="grid gap-2">
+          <label class="field-label" for="email">Correo</label>
+          <input id="email" name="email" class="input" type="email" />
+        </div>
+      </div>
+      <label class="flex items-center gap-3 text-sm font-semibold">
+        <input name="active" type="checkbox" class="rounded border-zinc-300 text-lagoon" checked />
+        Activo
+      </label>
+      <div id="roles-message" class="hidden rounded-md border border-green-200 bg-green-50 p-3 text-sm text-green-700"></div>
+      <button class="btn-primary justify-self-start" type="submit">
+        <Save class="h-4 w-4" />
+        Guardar rol
+      </button>
+    </form>
+    <section class="apple-panel overflow-hidden">
+      <header class="border-b border-zinc-200/80 bg-zinc-50/90 px-4 py-3 text-sm font-semibold">Roles recientes</header>
+      <div id="roles-list"></div>
+    </section>
+  </DashboardShell>
+  <script>
+    import '@/scripts/roles';
+  </script>
+</BaseLayout>

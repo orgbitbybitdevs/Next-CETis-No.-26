@@ -1,0 +1,43 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import DashboardShell from '@/components/DashboardShell.astro';
+import PageHeader from '@/components/PageHeader.astro';
+---
+
+<BaseLayout title="Dashboard | Buzón CETis No. 26" shell="app">
+  <DashboardShell>
+    <PageHeader eyebrow="Acceso institucional" title="Reportes recientes" description="Consulta por páginas de 20 registros y filtra por estado o tipo." />
+    <div class="mb-4 flex flex-wrap gap-3">
+      <select id="status-filter" class="input max-w-48">
+        <option value="all">Todos los estados</option>
+        <option value="new">Nuevo</option>
+        <option value="in_review">En revisión</option>
+        <option value="resolved">Resuelto</option>
+        <option value="rejected">Rechazado</option>
+      </select>
+      <select id="type-filter" class="input max-w-48">
+        <option value="all">Todos los tipos</option>
+        <option value="complaint">Quejas</option>
+        <option value="suggestion">Sugerencias</option>
+      </select>
+    </div>
+    <div class="apple-panel overflow-hidden">
+      <table class="w-full min-w-[760px] text-left text-sm">
+        <thead class="bg-zinc-50/90 text-xs font-semibold uppercase text-zinc-500">
+          <tr>
+            <th class="px-4 py-3">Titulo</th>
+            <th class="px-4 py-3">Tipo</th>
+            <th class="px-4 py-3">Estado</th>
+            <th class="px-4 py-3">Categoria</th>
+            <th class="px-4 py-3">Fecha</th>
+          </tr>
+        </thead>
+        <tbody id="reports-body"></tbody>
+      </table>
+    </div>
+    <button id="load-more" class="btn-secondary mt-4" type="button">Cargar mas</button>
+  </DashboardShell>
+  <script>
+    import '@/scripts/dashboard';
+  </script>
+</BaseLayout>
